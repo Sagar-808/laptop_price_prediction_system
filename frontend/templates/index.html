@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LaptopPriceAI - Predict Laptop Prices</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/" class="nav-link active">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="/services" class="nav-link">Services</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="/predict" class="nav-link btn-predict">Try Predictor</a>
+          </li>
+        </ul>
+        <div class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Animated Icon -->
+    <div class="animated-icon"><i class="fas fa-laptop"></i></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Predict Laptop Prices with AI</h1>
+          <p>
+            Enter specs and get an instant, data-driven price estimate for any
+            laptop
+          </p>
+          <div class="hero-buttons">
+            <a href="/predict" class="btn btn-primary">
+              <i class="fas fa-magic"></i>
+              Start Prediction
+            </a>
+            <a href="/about" class="btn btn-secondary">
+              <i class="fas fa-info-circle"></i>
+              Learn More
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">RMSE</span>
+              <span class="stat-label">~ reasonable</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">15+</span>
+              <span class="stat-label">Features</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">Instant</span>
+              <span class="stat-label">Results</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="hero-visual">
+            <i class="fas fa-chart-line"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <div class="section-header">
+          <h2>Why Choose LaptopPriceAI?</h2>
+          <p>Fast, accurate laptop price estimates</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <h3>AI-Powered Analysis</h3>
+            <p>
+              We analyze CPU, RAM, storage, screen, GPU, OS, and more to
+              estimate fair prices.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <h3>Real-time Insights</h3>
+            <p>Get instant price predictions and tweak specs to see impact.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Transparent</h3>
+            <p>
+              No hidden magic—simple linear regression with clean preprocessing.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Lightweight</h3>
+            <p>No external services required; runs locally.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <h2>How It Works</h2>
+          <p>Three quick steps to your estimate</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Enter Laptop Specs</h3>
+            <p>
+              Company, type, CPU, RAM, storage, screen resolution, OS, GPU, and
+              more.
+            </p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>AI Analysis</h3>
+            <p>
+              We engineer features and run a trained Linear Regression model.
+            </p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Get Results</h3>
+            <p>Instant estimated price with a clean summary of your inputs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Prediction Examples Section -->
+    <section class="examples-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>See Estimates in Action</h2>
+          <p>Examples of how specs impact price predictions</p>
+        </div>
+
+        <div class="examples-grid">
+          <div class="example-card">
+            <div class="example-header">
+              <div class="risk-indicator high">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Ultrabook Example</span>
+              </div>
+              <div class="confidence-score">Instant Price</div>
+            </div>
+
+            <div class="example-content">
+              <h3>Premium 13" Ultrabook</h3>
+              <div class="spec-summary">
+                <p>
+                  <strong>Intel i7 • 16GB • 512GB SSD</strong> • Retina
+                  2560x1600 • macOS
+                </p>
+              </div>
+
+              <div class="key-factors">
+                <h4>Key Price Drivers:</h4>
+                <ul>
+                  <li><i class="fas fa-check"></i> High-res IPS display</li>
+                  <li><i class="fas fa-check"></i> Fast CPU and ample RAM</li>
+                  <li><i class="fas fa-check"></i> SSD storage</li>
+                </ul>
+              </div>
+
+              <div class="quick-actions">
+                <h4>Try It:</h4>
+                <div class="action-tags">
+                  <span class="action-tag">Change RAM</span>
+                  <span class="action-tag">Change Storage</span>
+                  <span class="action-tag">Change GPU</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="examples-cta">
+          <p>Want to estimate a laptop price?</p>
+          <a href="/predict" class="btn btn-primary">
+            <i class="fas fa-magic"></i>
+            Try Estimator Now
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Predict Laptop Prices?</h2>
+          <p>Start using AI to estimate prices instantly</p>
+          <a href="/predict" class="btn btn-primary btn-large">
+            <i class="fas fa-rocket"></i>
+            Get Started Now
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-brand">
+              <i class="fas fa-laptop"></i>
+              <span>LaptopPriceAI</span>
+            </div>
+            <p>
+              AI-powered laptop price estimation for smarter buying decisions.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/services">Services</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="/predict">Price Estimator</a></li>
+              <li><a href="/services">Spec Analysis</a></li>
+              <li><a href="/services">Insights</a></li>
+              <li><a href="/services">Trends</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contact Info</h4>
+            <div class="contact-info">
+              <p><i class="fas fa-envelope"></i> info@laptoppriceai.com</p>
+              <p><i class="fas fa-phone"></i> +977 1-5970000</p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i> Putalisadak, Kathmandu
+                44600, Nepal
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 LaptopPriceAI. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

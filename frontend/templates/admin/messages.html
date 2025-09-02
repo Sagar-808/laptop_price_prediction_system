@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messages - Admin - LaptopPriceAI</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin" class="nav-link">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/predictions" class="nav-link">Predictions</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/messages" class="nav-link active">Messages</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/logout" class="nav-link">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero compact">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Contact Messages</h1>
+          <p>Latest 200 messages</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" style="padding-top: 2rem">
+      <div class="container">
+        <div class="feature-card" style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse">
+            <thead>
+              <tr>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Timestamp
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Name
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Email
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Phone
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Company
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Inquiry
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Message
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if messages %} {% for m in messages %}
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ m.timestamp }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ (m.firstName or '') ~ ' ' ~ (m.lastName or '') }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ m.email }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ m.phone or '' }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ m.company }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ m.inquiryType }}
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border-bottom: 1px solid #f1f5f9;
+                    max-width: 420px;
+                    white-space: pre-wrap;
+                  "
+                >
+                  {{ m.message }}
+                </td>
+              </tr>
+              {% endfor %} {% else %}
+              <tr>
+                <td colspan="7" style="padding: 12px">No messages yet.</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

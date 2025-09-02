@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - LaptopPriceAI</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link active">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="/services" class="nav-link">Services</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="/predict" class="nav-link btn-predict">Try Predictor</a>
+          </li>
+        </ul>
+        <div class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>About LaptopPriceAI</h1>
+          <p>Accurate laptop price estimates powered by machine learning</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+      <div class="container">
+        <div class="mission-content">
+          <div class="mission-text">
+            <h2>Our Mission</h2>
+            <p>
+              At LaptopPriceAI, we make laptop buying easier by estimating fair
+              prices from real-world specifications. Our mission is to give
+              consumers and sellers instant, trustworthy price insights.
+            </p>
+            <p>
+              We leverage modern machine learning and careful feature
+              engineering to turn specs like CPU, RAM, GPU, and display into
+              accurate price predictions.
+            </p>
+          </div>
+          <div class="mission-visual">
+            <i class="fas fa-bullseye"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Values</h2>
+          <p>The principles that guide everything we do</p>
+        </div>
+        <div class="values-grid">
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Innovation</h3>
+            <p>
+              We constantly push the boundaries of what's possible with ML to
+              deliver fast, accurate price estimates.
+            </p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h3>Trust</h3>
+            <p>
+              We build trust through transparency, data security, and delivering
+              on our promises to our clients.
+            </p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>User First</h3>
+            <p>
+              We design simple, honest tools that help users make smarter buying
+              and selling decisions.
+            </p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Results</h3>
+            <p>
+              We focus on delivering measurable, impactful results that help
+              organizations grow and succeed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-number">
+              {{ total_predictions_pretty or '0+' }}
+            </div>
+            <div class="stat-label">Laptops Analyzed</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">RMSE</div>
+            <div class="stat-label">Reported in model card</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Brands & Variants</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Support Available</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Estimate a Laptop Price?</h2>
+          <p>Use LaptopPriceAI to get an instant, data-backed estimate</p>
+          <div class="cta-buttons">
+            <a href="/predict" class="btn btn-primary">
+              <i class="fas fa-rocket"></i>
+              Start Free Trial
+            </a>
+            <a href="/contact" class="btn btn-secondary">
+              <i class="fas fa-phone"></i>
+              Talk to Sales
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-brand">
+              <i class="fas fa-laptop"></i>
+              <span>LaptopPriceAI</span>
+            </div>
+            <p>
+              AI-powered laptop price estimation for smarter buying decisions.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/services">Services</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="/predict">Price Estimator</a></li>
+              <li><a href="/services">Spec Analysis</a></li>
+              <li><a href="/services">Insights</a></li>
+              <li><a href="/services">Trends</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contact Info</h4>
+            <div class="contact-info">
+              <p><i class="fas fa-envelope"></i> info@laptoppriceai.com</p>
+              <p><i class="fas fa-phone"></i> +977 1-5970000</p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i> Putalisadak, Kathmandu
+                44600, Nepal
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 LaptopPriceAI. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

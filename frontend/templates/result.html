@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estimate Result - Laptop Price Estimator</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="/services" class="nav-link">Services</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="/predict" class="nav-link btn-predict">Try Predictor</a>
+          </li>
+        </ul>
+        <div class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Animated Icon -->
+    <div class="animated-icon">
+      <i class="fas fa-chart-line"></i>
+    </div>
+
+    <!-- Result View -->
+    <section class="result-section" id="result-view">
+      <div class="container">
+        <div class="result-wrapper">
+          {% if error %}
+          <!-- Error Display -->
+          <div class="error-card">
+            <div class="error-header">
+              <h1>
+                <i class="fas fa-exclamation-triangle"></i> Error Occurred
+              </h1>
+              <p>Please try again with different values</p>
+            </div>
+            <div class="error-message">
+              <div class="error-badge">
+                <div class="badge-icon">
+                  <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="badge-content">
+                  <h2>Prediction Failed</h2>
+                  <p>{{ error }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="error-actions">
+              <a href="/predict" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i>
+                Try Again
+              </a>
+              <button onclick="history.back()" class="btn btn-secondary">
+                <i class="fas fa-undo"></i>
+                Go Back
+              </button>
+            </div>
+          </div>
+          {% else %}
+          <!-- Success Display -->
+          <div class="prediction-card">
+            <div class="prediction-header">
+              <h1>Estimated Price</h1>
+              <p>Based on your laptop specifications</p>
+            </div>
+            <div class="prediction-result">
+              <div class="result-badge stay">
+                <div class="badge-icon">
+                  <i class="fas fa-indian-rupee-sign"></i>
+                </div>
+                <div class="badge-content">
+                  <h2>Rs. {{ "{:,.0f}".format(predicted_price) }}</h2>
+                  <p>Estimated price (NPR)</p>
+                </div>
+              </div>
+            </div>
+            {% if conversion %}
+            <p style="margin-top: 12px; color: #6b7280; font-size: 0.95rem">
+              Note: Model predicts in INR; converted to NPR using rate {{
+              conversion.rate }} (INR→NPR).
+            </p>
+            {% else %}
+            <p style="margin-top: 12px; color: #6b7280; font-size: 0.95rem">
+              Note: Price shown in NPR. If needed, set env INR_TO_NPR_RATE.
+            </p>
+            {% endif %}
+          </div>
+          {% endif %} {% if not error and laptop_data %}
+          <!-- Specification Summary -->
+          <div class="spec-summary">
+            <h3>Specification Summary</h3>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <span class="label">Company</span
+                ><span class="value">{{ laptop_data.Company }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Type</span
+                ><span class="value">{{ laptop_data.TypeName }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Inches</span
+                ><span class="value">{{ laptop_data.Inches }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Resolution</span
+                ><span class="value">{{ laptop_data.ScreenResolution }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">CPU</span
+                ><span class="value">{{ laptop_data.Cpu }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">RAM</span
+                ><span class="value">{{ laptop_data.Ram }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Storage</span
+                ><span class="value">{{ laptop_data.Memory }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">GPU</span
+                ><span class="value">{{ laptop_data.Gpu }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">OS</span
+                ><span class="value">{{ laptop_data.OpSys }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="label">Weight</span
+                ><span class="value">{{ laptop_data.Weight }}</span>
+              </div>
+            </div>
+          </div>
+          {% endif %} {% if not error %}
+          <!-- Actions -->
+          <div class="action-buttons">
+            <a href="/predict" class="btn btn-primary"
+              ><i class="fas fa-plus"></i> New Prediction</a
+            >
+            <button onclick="window.print()" class="btn btn-secondary">
+              <i class="fas fa-print"></i> Print
+            </button>
+            <button onclick="shareResult()" class="btn btn-accent">
+              <i class="fas fa-share"></i> Share
+            </button>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+      // View toggle functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtns = document.querySelectorAll(".toggle-btn");
+        const overviewView = document.getElementById("overview-view");
+        const detailedView = document.getElementById("detailed-view");
+        const animatedIcon = document.querySelector(".animated-icon");
+
+        toggleBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const view = this.getAttribute("data-view");
+
+            // Update active button
+            toggleBtns.forEach((b) => b.classList.remove("active"));
+            this.classList.add("active");
+
+            // Show/hide views
+            if (view === "overview") {
+              overviewView.classList.remove("hidden");
+              detailedView.classList.add("hidden");
+            } else {
+              overviewView.classList.add("hidden");
+              detailedView.classList.remove("hidden");
+            }
+          });
+        });
+
+        // Hide animated icon on scroll
+        let lastScrollTop = 0;
+        window.addEventListener("scroll", function () {
+          const scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+
+          if (scrollTop > lastScrollTop && scrollTop > 100) {
+            // Scrolling down
+            animatedIcon.classList.add("hidden");
+          } else {
+            // Scrolling up
+            animatedIcon.classList.remove("hidden");
+          }
+
+          lastScrollTop = scrollTop;
+        });
+      });
+
+      function shareResult() {
+        if (navigator.share) {
+          navigator.share({
+            title: "Laptop Price Estimate",
+            text: "Check out this AI estimate!",
+            url: window.location.href,
+          });
+        } else {
+          // Fallback: copy to clipboard
+          navigator.clipboard.writeText(window.location.href);
+          alert("Link copied to clipboard!");
+        }
+      }
+    </script>
+  </body>
+</html>

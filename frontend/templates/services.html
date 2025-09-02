@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Services - LaptopPriceAI</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="/services" class="nav-link active">Services</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="/predict" class="nav-link btn-predict">Try Predictor</a>
+          </li>
+        </ul>
+        <div class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Our Services</h1>
+          <p>Fast, accurate laptop price estimation and insights</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Services Section -->
+    <section class="services-main">
+      <div class="container">
+        <div class="section-header">
+          <h2>Our Service</h2>
+          <p>AI-powered price estimation to help you buy and sell smarter</p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card featured">
+            <div class="service-icon">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <div class="service-badge">Main Service</div>
+            <h3>Laptop Price Estimation</h3>
+            <p>
+              Our regression model turns raw specs (CPU, RAM, storage, GPU,
+              display, weight, OS) into a reliable price estimate. Get instant
+              results and spec insights.
+            </p>
+            <ul class="service-features">
+              <li><i class="fas fa-check"></i> Instant estimates</li>
+              <li><i class="fas fa-check"></i> Spec impact breakdown</li>
+              <li><i class="fas fa-check"></i> Clean, modern UI</li>
+              <li><i class="fas fa-check"></i> Exportable results</li>
+              <li><i class="fas fa-check"></i> Linear Regression baseline</li>
+              <li><i class="fas fa-check"></i> Consistent preprocessing</li>
+            </ul>
+            <a href="/predict" class="btn btn-primary">Start Estimating</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>How It Works</h2>
+          <p>Three steps to your estimate</p>
+        </div>
+        <div class="steps-grid">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <h3>Enter Laptop Specs</h3>
+            <p>
+              Provide brand, CPU, RAM, storage details, GPU, screen, OS, and
+              weight.
+            </p>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <h3>Feature Engineering</h3>
+            <p>
+              We parse resolution, CPU brand/speed, storage types, and compute
+              derived features like PPI.
+            </p>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <h3>Get Results</h3>
+            <p>
+              Instant estimated price with a neat summary of your
+              specifications.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Examples Section (Laptop-focused) -->
+    <section class="mock-data-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Example Estimates</h2>
+          <p>Sample configurations and their estimated prices</p>
+        </div>
+
+        <div class="scenarios-grid">
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <div class="risk-badge low">
+                <i class="fas fa-laptop"></i>
+                <span>Ultrabook 13.3"</span>
+              </div>
+              <div class="confidence">Spec score: High</div>
+            </div>
+            <div class="spec-profile">
+              <h3>Example Spec</h3>
+              <div class="profile-details">
+                <div class="detail-item">
+                  <span class="label">CPU:</span
+                  ><span class="value">Intel Core i5</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">RAM:</span><span class="value">16GB</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Storage:</span
+                  ><span class="value">512GB SSD</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">GPU:</span
+                  ><span class="value">Integrated</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Display:</span
+                  ><span class="value">13.3" 2560x1600</span>
+                </div>
+              </div>
+            </div>
+            <div class="recommendations">
+              <h4>Estimated Price:</h4>
+              <div class="recommendation-list">
+                <div class="recommendation-item">
+                  <i class="fas fa-indian-rupee-sign"></i>
+                  <div>
+                    <strong>Rs. 85,000 - 95,000</strong>
+                    <p>Typical range for this spec</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scenario-card">
+            <div class="scenario-header">
+              <div class="risk-badge medium">
+                <i class="fas fa-laptop-code"></i>
+                <span>Gaming 15.6"</span>
+              </div>
+              <div class="confidence">Spec score: Medium</div>
+            </div>
+            <div class="spec-profile">
+              <h3>Example Spec</h3>
+              <div class="profile-details">
+                <div class="detail-item">
+                  <span class="label">CPU:</span
+                  ><span class="value">AMD Ryzen 7</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">RAM:</span><span class="value">16GB</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Storage:</span
+                  ><span class="value">1TB SSD</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">GPU:</span
+                  ><span class="value">NVIDIA GTX/RTX</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Display:</span
+                  ><span class="value">15.6" 1920x1080</span>
+                </div>
+              </div>
+            </div>
+            <div class="recommendations">
+              <h4>Estimated Price:</h4>
+              <div class="recommendation-list">
+                <div class="recommendation-item">
+                  <i class="fas fa-indian-rupee-sign"></i>
+                  <div>
+                    <strong>Rs. 110,000 - 130,000</strong>
+                    <p>Typical range for this spec</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Ready to Estimate a Laptop Price?</h2>
+          <p>Start using AI to price your laptop in seconds</p>
+          <div class="cta-buttons">
+            <a href="/predict" class="btn btn-primary">
+              <i class="fas fa-rocket"></i>
+              Start Estimating
+            </a>
+            <a href="/contact" class="btn btn-secondary">
+              <i class="fas fa-phone"></i>
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-brand">
+              <i class="fas fa-laptop"></i>
+              <span>LaptopPriceAI</span>
+            </div>
+            <p>
+              AI-powered laptop price estimation for smarter buying decisions.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/services">Services</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="/predict">Price Estimator</a></li>
+              <li><a href="/services">Spec Analysis</a></li>
+              <li><a href="/services">Insights</a></li>
+              <li><a href="/services">Trends</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contact Info</h4>
+            <div class="contact-info">
+              <p><i class="fas fa-envelope"></i> info@laptoppriceai.com</p>
+              <p><i class="fas fa-phone"></i> +977 1-5970000</p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i> Putalisadak, Kathmandu
+                44600, Nepal
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 LaptopPriceAI. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

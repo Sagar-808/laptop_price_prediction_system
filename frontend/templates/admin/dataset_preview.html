@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dataset Preview - Admin - LaptopPriceAI</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin" class="nav-link">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/predictions" class="nav-link">Predictions</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/messages" class="nav-link">Messages</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/logout" class="nav-link">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero compact">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Dataset Preview</h1>
+          <p>{{ dataset.path }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" style="padding-top: 2rem">
+      <div class="container">
+        <div class="feature-card">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 12px;
+            "
+          >
+            <div>
+              <strong>Rows (approx):</strong> {{ dataset.rows }} &nbsp; | &nbsp;
+              <strong>Last Modified:</strong> {{ dataset.last_modified or 'n/a'
+              }}
+            </div>
+            <div>
+              <a class="btn btn-secondary btn-sm" href="/admin/dataset/download"
+                ><i class="fas fa-download"></i>&nbsp;Download CSV</a
+              >
+            </div>
+          </div>
+          <div style="overflow: auto; max-height: 70vh">
+            {{ preview_html | safe }}
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

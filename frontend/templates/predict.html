@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Laptop Price Estimator - LaptopPriceAI</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/about" class="nav-link">About</a>
+          </li>
+          <li class="nav-item">
+            <a href="/services" class="nav-link">Services</a>
+          </li>
+          <li class="nav-item">
+            <a href="/contact" class="nav-link">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a href="/predict" class="nav-link btn-predict active"
+              >Try Predictor</a
+            >
+          </li>
+        </ul>
+        <div class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Animated Icon -->
+    <div class="animated-icon">
+      <i class="fas fa-laptop"></i>
+    </div>
+
+    <!-- Compact Hero Section -->
+    <section class="hero compact">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Laptop Price Estimator</h1>
+          <p>Enter specs to get an instant price estimate</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Form -->
+    <section class="form-section">
+      <div class="container">
+        <div class="form-wrapper">
+          <h2>Enter Laptop Specifications</h2>
+          <p>Fields mirror the training dataset for best results</p>
+
+          <form
+            id="priceForm"
+            action="/predict"
+            method="POST"
+            class="prediction-form"
+          >
+            <div class="form-group">
+              <label>Basic</label>
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="Company">Company</label>
+                  <select id="Company" name="Company" required></select>
+                </div>
+                <div class="input-group">
+                  <label for="TypeName">Type</label>
+                  <select id="TypeName" name="TypeName" required></select>
+                </div>
+                <div class="input-group">
+                  <label for="Inches">Screen Size (Inches)</label>
+                  <input
+                    type="number"
+                    id="Inches"
+                    name="Inches"
+                    step="0.1"
+                    placeholder="13.3"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Display</label>
+              <div class="form-row">
+                <div class="input-group full-width">
+                  <label for="ScreenResolution">Screen Resolution</label>
+                  <select
+                    id="ScreenResolution"
+                    name="ScreenResolution"
+                    class="full-width-select"
+                    required
+                  ></select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Performance</label>
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="Cpu">CPU</label>
+                  <select id="Cpu" name="Cpu" required></select>
+                </div>
+                <div class="input-group">
+                  <label for="Ram">RAM</label>
+                  <select id="Ram" name="Ram" required></select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Storage & Graphics</label>
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="Memory">Storage</label>
+                  <select id="Memory" name="Memory" required></select>
+                </div>
+                <div class="input-group">
+                  <label for="Gpu">GPU</label>
+                  <select id="Gpu" name="Gpu" required></select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>System</label>
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="OpSys">Operating System</label>
+                  <select id="OpSys" name="OpSys" required></select>
+                </div>
+                <div class="input-group">
+                  <label for="Weight">Weight</label>
+                  <select id="Weight" name="Weight" required></select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Help Icon -->
+            <div class="help-section">
+              <div class="help-icon" onclick="showHelp()">
+                <i class="fas fa-lightbulb"></i>
+                <span>Need help? <strong>Click for tips</strong></span>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-section">
+              <button type="submit" class="submit-btn">
+                <i class="fas fa-calculator"></i>
+                Get Price Estimate
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <h3>Estimating Price...</h3>
+        <p>Engineering features and running the model</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="footer-brand">
+              <i class="fas fa-laptop"></i>
+              <span>LaptopPriceAI</span>
+            </div>
+            <p>
+              AI-powered laptop price estimation for smarter buying decisions.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+              <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/services">Services</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="/predict">Price Estimator</a></li>
+              <li><a href="/services">Spec Analysis</a></li>
+              <li><a href="/services">Insights</a></li>
+              <li><a href="/services">Trends</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contact Info</h4>
+            <div class="contact-info">
+              <p><i class="fas fa-envelope"></i> info@laptoppriceai.com</p>
+              <p><i class="fas fa-phone"></i> +977 1-5970000</p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i> Putalisadak, Kathmandu
+                44600, Nepal
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 LaptopPriceAI. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,225 @@
+# ===== PYTHON =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ===== VIRTUAL ENVIRONMENTS =====
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# ===== MODEL FILES (Large files) =====
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.model
+*.bin
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+
+# ===== DATA FILES =====
+*.csv
+*.json
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.hdf
+*.h5
+*.db
+*.sqlite
+*.sqlite3
+
+# ===== LOGS =====
+*.log
+logs/
+log/
+*.out
+*.err
+
+# ===== TEMPORARY FILES =====
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===== IDE FILES =====
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.atom/
+.brackets.json
+
+# ===== JUPYTER NOTEBOOKS =====
+.ipynb_checkpoints/
+*.ipynb
+
+# ===== TESTING =====
+.coverage
+.pytest_cache/
+.tox/
+.nox/
+htmlcov/
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+
+# ===== DOCUMENTATION =====
+docs/_build/
+site/
+
+# ===== BACKUP FILES =====
+*.bak
+*.backup
+*.old
+*.orig
+
+# ===== SECURITY =====
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.key
+*.pem
+*.p12
+*.pfx
+
+# ===== OS GENERATED =====
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===== FLASK =====
+instance/
+.webassets-cache
+
+# ===== MONGODB =====
+*.lock
+mongod.log
+
+# ===== PLOTS AND REPORTS =====
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+*.eps
+*.ps
+reports/
+plots/
+figures/
+graphs/
+
+# ===== CACHE =====
+.cache/
+cache/
+*.cache
+
+# ===== PACKAGE MANAGERS =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== COMPILED FILES =====
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# ===== ARCHIVES =====
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ===== PROJECT SPECIFIC =====
+# Uncomment if you want to ignore model files (they're large)
+# backend/model/*.pkl
+# backend/model/*.joblib
+
+# Uncomment if you want to ignore data files
+# data/*.csv
+# data/*.json
+
+# Uncomment if you want to ignore generated reports
+# backend/model/*_report.json
+# backend/model/*_plots.*
+
+# ===== ENVIRONMENT VARIABLES =====
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# ===== DATABASE =====
+*.db
+*.sqlite
+*.sqlite3
+database/
+
+# ===== BACKUP AND ARCHIVE =====
+backup/
+archive/
+*.tar.gz
+*.zip
+*.rar
+
+# ===== MONITORING =====
+monitoring/
+metrics/
+*.metrics
+
+# ===== DEPLOYMENT =====
+deploy/
+deployment/
+*.deploy 

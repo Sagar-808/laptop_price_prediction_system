@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - LaptopPriceAI</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+          <li class="nav-item">
+            <a href="/admin/login" class="nav-link active">Admin</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/messages" class="nav-link">Messages</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero compact">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Admin Login</h1>
+          <p>Restricted area for administrators</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-section">
+      <div class="container">
+        <div class="form-wrapper" style="max-width: 520px; margin: 0 auto">
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if
+          messages %}
+          <div class="alert" style="margin-bottom: 16px">
+            {% for category, message in messages %}
+            <div class="alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+          {% endif %} {% endwith %}
+
+          <form
+            action="{{ url_for('admin_login', next=request.args.get('next')) }}"
+            method="POST"
+            class="prediction-form"
+          >
+            <div class="form-group">
+              <label>Credentials</label>
+              <div class="form-row">
+                <div class="input-group">
+                  <label for="username">Username</label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="admin"
+                    required
+                  />
+                </div>
+                <div class="input-group">
+                  <label for="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="submit-section">
+              <button type="submit" class="submit-btn">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign In
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

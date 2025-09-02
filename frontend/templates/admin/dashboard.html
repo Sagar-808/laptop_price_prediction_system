@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - LaptopPriceAI</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="nav-brand">
+          <a href="/">
+            <i class="fas fa-laptop"></i>
+            <span>LaptopPriceAI</span>
+          </a>
+        </div>
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="/admin" class="nav-link active">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/predictions" class="nav-link">Predictions</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/messages" class="nav-link">Messages</a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/logout" class="nav-link">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero compact">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Admin Dashboard</h1>
+          <p>Monitor model, data and recent activity</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" style="padding-top: 2rem">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-brain"></i></div>
+            <h3>Model</h3>
+            {% if metrics %}
+            <p><strong>Trained:</strong> {{ trained_at }}</p>
+            <p>
+              <strong>RMSE:</strong> {{ '%.2f'|format(metrics.rmse) if
+              metrics.rmse is defined else 'n/a' }}
+            </p>
+            <p>
+              <strong>MAE:</strong> {{ '%.2f'|format(metrics.mae) if metrics.mae
+              is defined else 'n/a' }}
+            </p>
+            <p>
+              <strong>R² (test):</strong> {{ '%.3f'|format(metrics.r2_test) if
+              metrics.r2_test is defined else 'n/a' }}
+            </p>
+            {% else %}
+            <p>No model metrics available.</p>
+            {% endif %}
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-database"></i></div>
+            <h3>Dataset</h3>
+
+            <p><strong>Rows:</strong> {{ dataset.rows }}</p>
+            <p>
+              <strong>Last Modified:</strong> {{ dataset.last_modified or 'n/a'
+              }}
+            </p>
+            <p>
+              <strong>File:</strong>
+              <br />
+              <span style="margin-left: 8px; white-space: nowrap">
+                <a
+                  href="/admin/dataset/preview"
+                  class="btn btn-secondary btn-sm"
+                  style="margin-right: 8px"
+                  ><i class="fas fa-eye"></i>&nbsp;View</a
+                >
+                <a
+                  href="/admin/dataset/download"
+                  class="btn btn-secondary btn-sm"
+                  ><i class="fas fa-download"></i>&nbsp;Download</a
+                >
+              </span>
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-plug"></i></div>
+            <h3>Storage</h3>
+            <p>
+              <strong>MongoDB:</strong> {{ 'Enabled' if mongo_enabled else
+              'Disabled (using file)' }}
+            </p>
+            <p>Recent predictions are stored for analytics.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+            <h3>Totals</h3>
+            <p><strong>Total Predictions:</strong> {{ total_predictions }}</p>
+            <p><strong>Total Messages:</strong> {{ total_messages }}</p>
+          </div>
+        </div>
+
+        <div class="section-header" style="margin-top: 2rem">
+          <h2>Recent Predictions</h2>
+          <p>Last 10 submissions</p>
+        </div>
+
+        <div class="feature-card" style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse">
+            <thead>
+              <tr>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Timestamp
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Company
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  CPU
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  RAM
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Storage
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Predicted Price
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if recent_predictions %} {% for p in recent_predictions %}
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ p.timestamp }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ p.specs.Company if p.specs else '' }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ p.specs.Cpu if p.specs else '' }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ p.specs.Ram if p.specs else '' }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ p.specs.Memory if p.specs else '' }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  Rs. {{ '%.0f'|format(p.predicted_price|float) if
+                  p.predicted_price is defined else 'n/a' }}
+                </td>
+              </tr>
+              {% endfor %} {% else %}
+              <tr>
+                <td colspan="6" style="padding: 12px">No predictions yet.</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-header" style="margin-top: 2rem">
+          <h2>Recent Messages</h2>
+          <p>Last 5 messages</p>
+        </div>
+        <div class="feature-card" style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse">
+            <thead>
+              <tr>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Timestamp
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Name
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Email
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Inquiry
+                </th>
+                <th
+                  style="
+                    text-align: left;
+                    padding: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                  "
+                >
+                  Message
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if recent_messages %} {% for m in recent_messages %}
+              <tr>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ m.timestamp }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ (m.firstName or '') ~ ' ' ~ (m.lastName or '') }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ m.email }}
+                </td>
+                <td style="padding: 8px; border-bottom: 1px solid #f1f5f9">
+                  {{ m.inquiryType }}
+                </td>
+                <td
+                  style="
+                    padding: 8px;
+                    border-bottom: 1px solid #f1f5f9;
+                    max-width: 320px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  "
+                >
+                  {{ m.message }}
+                </td>
+              </tr>
+              {% endfor %} {% else %}
+              <tr>
+                <td colspan="5" style="padding: 12px">No messages yet.</td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
