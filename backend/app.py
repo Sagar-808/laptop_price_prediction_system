@@ -119,6 +119,20 @@ def preprocess_input(laptop_form: dict) -> pd.DataFrame:
         print("Preprocess error:", e)
         return None
 
+def _normalize_weight(val):
+    try:
+        if val is None:
+            return val
+        s = str(val).strip()
+        if not s:
+            return s
+        sl = s.lower().replace("kgs", "kg").replace(" kg", "kg").strip()
+        if not sl.endswith("kg"):
+            sl = f"{sl}kg"
+        return sl
+    except Exception:
+        return val
+
 def make_prediction(laptop_form: dict):
     """Return predicted price (converted to NPR) and simple metadata.
     Assumes model was trained on INR; converts to NPR using a configurable rate.
@@ -392,6 +406,9 @@ def predict():
         if pipeline is None:
             return render_template("result.html", error="Model not loaded", laptop_data={})
         data = request.form.to_dict()
+        # Ensure Weight is in dataset-friendly format (e.g., "2.2kg")
+        if "Weight" in data:
+            data["Weight"] = _normalize_weight(data.get("Weight"))
         result = make_prediction(data)
         if "error" in result:
             return render_template("result.html", error=result["error"], laptop_data=data)
@@ -412,6 +429,8 @@ def api_predict():
         if pipeline is None:
             return jsonify({"error": "Model not loaded"}), 500
         data = request.get_json() or {}
+        if "Weight" in data:
+            data["Weight"] = _normalize_weight(data.get("Weight"))
         result = make_prediction(data)
         # Persist on success
         if "error" not in result:
@@ -532,17 +551,27 @@ def admin_dataset_preview():
     if not path or not os.path.exists(path):
         flash("Dataset file not found", "danger")
         return redirect(url_for("admin_dashboard"))
-    # Build preview HTML (first 100 rows)
+    # Build preview HTML with selectable number of rows
     try:
         import pandas as _pd
         df = _pd.read_csv(path)
-        preview_html = df.head(100).to_html(classes="admin-table", index=False)
+        allowed = [100, 500, 1000, 1500]
+        try:
+            rows = int(request.args.get("rows", 100))
+        except Exception:
+            rows = 100
+        if rows not in allowed:
+            rows = 100
+        # Render without built-in borders to avoid double borders; style via CSS
+        preview_html = df.head(rows).to_html(classes="admin-table", index=False, border=0)
     except Exception as e:
         preview_html = f"<div class='error-card'><p>Failed to render preview: {e}</p></div>"
     return render_template(
         "admin/dataset_preview.html",
         dataset=info,
         preview_html=preview_html,
+        rows=rows,
+        rows_options=[100, 500, 1000, 1500],
     )
 
 
