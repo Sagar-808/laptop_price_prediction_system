@@ -55,30 +55,70 @@
     <section class="features" style="padding-top: 2rem">
       <div class="container">
         <div class="feature-card">
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 12px;
-            "
-          >
-            <div>
-              <strong>Rows (approx):</strong> {{ dataset.rows }} &nbsp; | &nbsp;
-              <strong>Last Modified:</strong> {{ dataset.last_modified or 'n/a'
-              }}
+          <div class="admin-toolbar">
+            <div class="meta">
+              <span><strong>Rows (approx):</strong> {{ dataset.rows }}</span>
+              <span class="divider">|</span>
+              <span><strong>Last Modified:</strong> {{ dataset.last_modified or 'n/a' }}</span>
             </div>
-            <div>
-              <a class="btn btn-secondary btn-sm" href="/admin/dataset/download"
-                ><i class="fas fa-download"></i>&nbsp;Download CSV</a
-              >
+            <div class="actions">
+              <form method="get" action="{{ url_for('admin_dataset_preview') }}" class="rows-form">
+                <label for="rows" class="sr-only">Show rows</label>
+                <select id="rows" name="rows" onchange="this.form.submit()">
+                  {% for opt in rows_options %}
+                  <option value="{{ opt }}" {% if rows == opt %}selected{% endif %}>Show {{ opt }}</option>
+                  {% endfor %}
+                </select>
+              </form>
+              <a class="btn btn-secondary btn-sm" href="/admin/dataset/download">
+                <i class="fas fa-download"></i>&nbsp;Download CSV
+              </a>
             </div>
           </div>
-          <div style="overflow: auto; max-height: 70vh">
+          <div class="table-wrap">
             {{ preview_html | safe }}
           </div>
         </div>
       </div>
     </section>
+    <style>
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+      /* Admin dataset preview toolbar */
+      .admin-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 12px;
+      }
+      .admin-toolbar .meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .admin-toolbar .meta .divider { color: var(--border); }
+      .admin-toolbar .actions {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .rows-form select {
+        padding: 0.4rem 0.6rem;
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        background: white;
+        color: var(--dark);
+        font-weight: 600;
+      }
+      .rows-form select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(16,185,129,0.1); }
+      /* Table wrapper and table styles */
+      .table-wrap { overflow: auto; max-height: 70vh; }
+      table.admin-table { width: 100%; border-collapse: collapse; }
+      table.admin-table thead th { position: sticky; top: 0; background: #f8fafc; z-index: 1; }
+      table.admin-table th, table.admin-table td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; }
+      table.admin-table tr:nth-child(even) { background: #fafafa; }
+      table.admin-table tr:hover { background: rgba(16,185,129,0.06); }
+    </style>
   </body>
 </html>

@@ -74,7 +74,6 @@
       <div class="container">
         <div class="form-wrapper">
           <h2>Enter Laptop Specifications</h2>
-          <p>Fields mirror the training dataset for best results</p>
 
           <form
             id="priceForm"
@@ -95,14 +94,7 @@
                 </div>
                 <div class="input-group">
                   <label for="Inches">Screen Size (Inches)</label>
-                  <input
-                    type="number"
-                    id="Inches"
-                    name="Inches"
-                    step="0.1"
-                    placeholder="13.3"
-                    required
-                  />
+                  <select id="Inches" name="Inches" required></select>
                 </div>
               </div>
             </div>
@@ -158,8 +150,17 @@
                   <select id="OpSys" name="OpSys" required></select>
                 </div>
                 <div class="input-group">
-                  <label for="Weight">Weight</label>
-                  <select id="Weight" name="Weight" required></select>
+                  <label for="Weight">Weight (kg)</label>
+                  <input
+                    type="number"
+                    inputmode="decimal"
+                    id="Weight"
+                    name="Weight"
+                    min="0"
+                    step="0.1"
+                    placeholder="e.g. 2.2"
+                    required
+                  />
                 </div>
               </div>
             </div>

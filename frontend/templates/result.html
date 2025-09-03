@@ -94,7 +94,7 @@
           </div>
           {% else %}
           <!-- Success Display -->
-          <div class="prediction-card">
+          <div class="prediction-card" id="estimated-price">
             <div class="prediction-header">
               <h1>Estimated Price</h1>
               <p>Based on your laptop specifications</p>
@@ -116,9 +116,7 @@
               conversion.rate }} (INR→NPR).
             </p>
             {% else %}
-            <p style="margin-top: 12px; color: #6b7280; font-size: 0.95rem">
-              Note: Price shown in NPR. If needed, set env INR_TO_NPR_RATE.
-            </p>
+            <p style="margin-top: 12px; color: #6b7280; font-size: 0.95rem"></p>
             {% endif %}
           </div>
           {% endif %} {% if not error and laptop_data %}
@@ -190,6 +188,14 @@
     <script>
       // View toggle functionality
       document.addEventListener("DOMContentLoaded", function () {
+        try {
+          const priceCard = document.getElementById("estimated-price");
+          if (priceCard) {
+            window.scrollTo(0, 0);
+            priceCard.scrollIntoView({ behavior: "auto", block: "start" });
+          }
+        } catch (e) {}
+
         const toggleBtns = document.querySelectorAll(".toggle-btn");
         const overviewView = document.getElementById("overview-view");
         const detailedView = document.getElementById("detailed-view");
