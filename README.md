@@ -113,4 +113,4 @@ Note: Confusion matrix and classification metrics (precision/recall/F1) do not a
 
 ## License
 
-MIT
+808 @Copyright
