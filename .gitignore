@@ -223,3 +223,14 @@ metrics/
 deploy/
 deployment/
 *.deploy 
+
+# ===== PROJECT OVERRIDES (Allowlist important tracked files) =====
+# Datasets we want tracked despite the global data-file ignores
+!laptop_data.csv
+!data/train.csv
+!data/test.csv
+!backend/model/laptop_data.csv
+
+# Frontend static assets (allow images under assets despite *.png/jpg ignores)
+!frontend/static/assets/
+!frontend/static/assets/**
