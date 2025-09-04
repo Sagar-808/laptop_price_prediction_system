@@ -1,6 +1,6 @@
 # Laptop Price Estimator
 
-A complete Flask web app that estimates laptop prices using a scikit-learn Linear Regression pipeline. Clean UI, dataset-driven dropdowns, and shared preprocessing ensure consistent results.
+A complete Flask web app that estimates laptop prices using a  Linear Regression pipeline. Clean UI, dataset-driven dropdowns, and shared preprocessing ensure consistent results.
 
 ## Features
 
