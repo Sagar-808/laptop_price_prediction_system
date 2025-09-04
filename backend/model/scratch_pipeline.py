@@ -45,8 +45,7 @@ class Preprocessor:
         # Standardize numeric
         num = X[self.num_cols].astype(float).to_numpy(copy=False)
         Znum = (num - self.num_means_) / self.num_stds_
-        parts = ([] if not ohe_parts else ohe_parts) + [Znum]
-        return np.hstack(parts) if parts else Znum
+        return np.hstack(parts)
 
     def fit_transform(self, X: pd.DataFrame) -> np.ndarray:
         return self.fit(X).transform(X)
