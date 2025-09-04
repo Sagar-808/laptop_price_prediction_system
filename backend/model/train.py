@@ -7,11 +7,15 @@ import joblib
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.compose import ColumnTransformer
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import train_test_split
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+# Scratch pipeline (no sklearn)
+try:
+    from .scratch_pipeline import Preprocessor, ScratchPipeline  # type: ignore
+except Exception:
+    import sys as _sys
+    import os as _os
+    _sys.path.append(_os.path.dirname(_os.path.abspath(__file__)))
+    from scratch_pipeline import Preprocessor, ScratchPipeline  # type: ignore
 
 # Support running as a module or as a script
 try:
@@ -33,17 +37,17 @@ def train_laptop_price_model(csv_path: str, output_path: str) -> dict:
     # Build engineered features and split
     X, y, cat_cols, num_cols = parse_laptop_dataframe(df, drop_target=False)
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
+    # Simple train/test split (deterministic shuffle)
+    rng = np.random.default_rng(42)
+    idx = np.arange(len(X))
+    rng.shuffle(idx)
+    split = int(len(idx) * 0.8)
+    train_idx, test_idx = idx[:split], idx[split:]
+    X_train, X_test = X.iloc[train_idx].reset_index(drop=True), X.iloc[test_idx].reset_index(drop=True)
+    y_train, y_test = y.iloc[train_idx].reset_index(drop=True), y.iloc[test_idx].reset_index(drop=True)
 
     # Pipeline: preprocess -> linear regression
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ("cat", OneHotEncoder(handle_unknown="ignore"), cat_cols),
-            ("num", StandardScaler(), num_cols),
-        ]
-    )
+    preprocessor = Preprocessor(cat_cols, num_cols)
 
     # Use scratch implementation instead of importing algorithm
     try:
@@ -54,10 +58,7 @@ def train_laptop_price_model(csv_path: str, output_path: str) -> dict:
         _sys.path.append(_os.path.dirname(_os.path.abspath(__file__)))
         from linear_regression import MyLinearRegression  # type: ignore
 
-    pipeline = Pipeline(steps=[
-        ("preprocess", preprocessor),
-        ("regressor", MyLinearRegression(fit_intercept=True)),
-    ])
+    pipeline = ScratchPipeline(preprocessor, MyLinearRegression(fit_intercept=True))
 
     print("Training Linear Regression pipeline...")
     pipeline.fit(X_train, y_train)
@@ -67,10 +68,28 @@ def train_laptop_price_model(csv_path: str, output_path: str) -> dict:
     y_pred_test = pipeline.predict(X_test)
     y_pred_train = pipeline.predict(X_train)
 
-    rmse = float(np.sqrt(mean_squared_error(y_test, y_pred_test)))
-    mae = float(mean_absolute_error(y_test, y_pred_test))
-    r2_test = float(r2_score(y_test, y_pred_test))
-    r2_train = float(r2_score(y_train, y_pred_train))
+    # Metrics (scratch)
+    def _rmse(y_true, y_pred):
+        y_t = np.asarray(y_true, dtype=float)
+        y_p = np.asarray(y_pred, dtype=float)
+        return np.sqrt(np.mean((y_t - y_p) ** 2))
+
+    def _mae(y_true, y_pred):
+        y_t = np.asarray(y_true, dtype=float)
+        y_p = np.asarray(y_pred, dtype=float)
+        return np.mean(np.abs(y_t - y_p))
+
+    def _r2(y_true, y_pred):
+        y_t = np.asarray(y_true, dtype=float)
+        y_p = np.asarray(y_pred, dtype=float)
+        ss_res = np.sum((y_t - y_p) ** 2)
+        ss_tot = np.sum((y_t - np.mean(y_t)) ** 2)
+        return 1 - ss_res / ss_tot if ss_tot != 0 else 0.0
+
+    rmse = float(_rmse(y_test, y_pred_test))
+    mae = float(_mae(y_test, y_pred_test))
+    r2_test = float(_r2(y_test, y_pred_test))
+    r2_train = float(_r2(y_train, y_pred_train))
 
     # Classification reports and confusion matrix do not apply to regression.
     # For your college report, we include train/test R^2, RMSE, MAE, and a residual summary.
